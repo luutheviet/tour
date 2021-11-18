@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+
+    <title>Quản lý thuế</title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	
+    <!-- bootstrap-progressbar -->
+    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <script src="../vendors/jquery/dist/jquery.js"></script>
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a class="site_title"><i class="fa fa-paw"></i> <span>Quản lý thuế</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <ul class="nav side-menu">
+                  <li><a href="#"><i class="fa fa-home"></i> Trang chủ <span class="fa"></span></a></li>
+				          <li><a href="DanhSach.html"><i class="fa fa-book"></i> Xem danh sách<span class="fa"></span></a></li>
+				          <li><a href="XuatExcel.html"><i class="fa fa-download"></i> Xuất excel <span class="fa"></span></a></li>
+				          <li><a href="CauHinhThue.html"><i class="fa fa-refresh"></i> Cấu hình thuế<span class="fa"></span></a></li>
+                </ul>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="right_col" role="main" style="position:relative">
+          <div class="nav toggle menu_btn">
+              <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+          </div>
+          <div style="margin-top:25px">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="x_panel">
+                      <div class="x_title">
+                          <h2>Danh sách</h2>
+                          <div class="clearfix"></div>
+                      </div>
+                      <div class="x_title">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label class="control-label">
+                                  Kiểu danh sách
+                              </label>
+                              <select class="form-control" name="ddlType" id="ddlType">
+                                  <option value="0">------- Chọn -------</option>
+                                  <option value="1">Danh sách cá nhân đã đóng</option>
+                              </select>
+                            </div>
+
+                            <div class="col-md-2">
+                              <label class="control-label">
+                                  Khu vực
+                              </label>
+                              <select class="form-control" name="ddlKhuVuc" id="ddlKhuVuc">
+                                  <option value="0">------- Chọn -------</option>
+                                  <option value="1">TP Hà Nội</option>
+                                  <option value="2">TP Đà Nẵng</option>
+                                  <option value="3">TP Hồ Chí Minh</option>
+                              </select>
+                            </div>
+                            <div class="col-md-2">
+                              <label class="control-label">
+                                  Từ ngày
+                              </label>
+                              <input name="startAt" type="date" class="form-control inputdk" id="startAt"/>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="control-label">
+                                    Đến ngày
+                                </label>
+                                <input  name="startEnd" type="date" class="form-control inputdk"  id="startEnd" />
+                            </div>
+                            <div class="col-md-3" style="padding-top:24px;">
+                              <button type="button" id="btnSearch" class="btn btn-info"><i class="fa fa-search" title="tìm kiếm"></i></button>
+                            </div>
+                          </div>
+                          <br />
+                          <hr />
+                          <div class="x_content">
+                              <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                  <div>
+                                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                                      <thead>
+                                          <tr role="row">
+                                              <th style="text-align:center">STT</th>
+                                              <th style="text-align:center">Số thuế</th>
+                                              <th style="text-align:center">Họ tên</th>
+                                              <th style="text-align:center">Số CMND/CCCD</th>
+                                              <th style="text-align:center">Thông tin</th>
+                                              <th style="text-align:center">Địa chỉ</th>
+                                              <th style="text-align:center">Thời gian đóng thuê</th>
+                                              <th style="text-align:center">Mức thuế</th>
+                                              <th style="text-align:center">Thuế xuất</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>K41</td>
+                                          <td>Đặng Trần Tú</td>
+                                          <td>0010800388</td>
+                                          <td>Ngày cấp: 20/10/2017 <br/> Nơi cấp: Công an Hà Đông</td>
+                                          <td>Dương Nội Hà Đông</td>
+                                          <td>05/04/2021</td>
+                                          <td>5.000.000 VNĐ</td>
+                                          <td>5%</td>
+                                        </tr>   
+                                        <tr>
+                                          <td>2</td>
+                                          <td>K42</td>
+                                          <td>Vũ Trọng Tuyền</td>
+                                          <td>0010800322</td>
+                                          <td>Ngày cấp: 10/10/2017 <br/> Nơi cấp: Công an Hà Đông</td>
+                                          <td>Dương Nội Hà Đông</td>
+                                          <td>05/04/2021</td>
+                                          <td>4.000.000 VNĐ</td>
+                                          <td>5%</td>
+                                        </tr>  
+                                        <tr>
+                                          <td>3</td>
+                                          <td>K43</td>
+                                          <td>Lưu Thế Việt</td>
+                                          <td>0010800333</td>
+                                          <td>Ngày cấp: 5/10/2017 <br/> Nơi cấp: Công an Hà Đông</td>
+                                          <td>Dương Nội Hà Đông</td>
+                                          <td>05/04/2021</td>
+                                          <td>6.000.000 VNĐ</td>
+                                          <td>5%</td>
+                                        </tr>                   
+                                      </tbody>
+                                  </table>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+        <div class="right_col" role="main">
+
+        </div>
+      </div>
+    </div>
+    <div class="modal fade modeladd" id="modeladd" role="dialog">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Thêm mới</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="x_content">
+                      <br />
+                      <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                          <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="khoa">
+                                  Thuộc khoa <span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <select class="form-control col-md-7 col-xs-12" id="khoa" name="khoa">
+                                      <option value="0">------- Chọn Khóa học -------</option>
+                                      @foreach (var item in listKhoaHoc)
+                                      {
+                                          <option value="@item.MaKhoa">@item.MaKhoa</option>
+                                      }
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nganh">
+                                  Thuộc ngành <span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <select class="form-control col-md-7 col-xs-12" id="nganh" name="nganh"></select>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="namhoc">
+                                  Thuộc khoá học <span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <select class="form-control col-md-7 col-xs-12" id="namhoc" name="namhoc">
+                                      <option value="0">------- Chọn khoá học -------</option>
+                                      @foreach (var item in listKhoaHoc)
+                                      {
+                                          <option value="@item.MaKhoa">@item.MaKhoa</option>
+                                      }
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hocphi">
+                                  Tổng học phí<span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <input type="text" id="hocphi" name="hocphi" required="required" class="form-control col-md-7 col-xs-12">
+                              </div>
+                          </div>
+                          
+                      </form>
+                  </div>
+              </div>
+              <div class="modal-footer" style="text-align:center">
+                  <button type="button" class="btn btn-primar" data-dismiss="modal">Hủy</button>
+                  <button type="button" id="btnThem" class="btn btn-success" data-dismiss="modal">Thêm</button>
+              </div>
+
+          </div>
+      </div>
+  </div>
+
+  <!-- <div id="divProcessing" style="position:fixed;top:0px; left:0px; height:3000px;width :100%;text-align:center;
+         background:#f5f5f5;
+         opacity:0.5;
+         z-index:999;
+         position:absolute;
+         left:0px;
+         top :0px;
+         cursor: wait; display:none">
+    <img style="position: absolute;top: 50%;" src="~/src/Images/processing.gif" alt="" width="70" height="70" />
+</div> -->
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <script src="../vendors/jquery/dist/jquery.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="../vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="../vendors/Flot/jquery.flot.js"></script>
+    <script src="../vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="../vendors/Flot/jquery.flot.time.js"></script>
+    <script src="../vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="../vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="../vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <link href="js/toastr.css" rel="stylesheet">
+    <script src="js/toastr.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+    
+
+
+    <script>
+      $('#btnThem').click(function () {
+           var khoa = $('#khoa').val();
+           var tenkhoa = $("#khoa option:selected").text();
+           var manganh = $('#nganh').val();
+           var tennganh = $("#nganh option:selected").text();
+           var namhoc = $('#namhoc').val();
+           var hocphi = $('#hocphi').val();
+           if (namhoc == "") {
+               toastr.error('Khoá học không được để trống');
+               return false;
+           }
+           if (hocphi == "") {
+               toastr.error('Học phí không được để trống');
+               return false;
+           }
+           if (khoa == "") {
+               toastr.error('bạn chưa chọn khoa');
+               return false;
+           }
+           if (manganh == "") {
+               toastr.error('bạn chưa chọn ngành');
+               return false;
+           }
+   
+           $("#divProcessing").show();
+           $.ajax({
+               type: "GET",
+               url: '@Url.Action("ThemMoiMucHocPhi", "QuanLyHocPhi")',
+               data: { khoa: khoa, tenkhoa: tenkhoa, manganh: manganh, tennganh: tennganh, namhoc: namhoc, hocphi: hocphi },
+               dataType: "json",
+               contentType: 'application/json',
+               success: function (data) {
+                   $("#divProcessing").hide();
+                   if (data == 'OK') {
+                       setTimeout(function () { location.reload(); }, 2000);
+                       toastr.success('thêm mới thành công');
+                   } else {
+                       toastr.error(data);
+                   }
+               },
+               error: function (req, status, error) {
+                   $("#divProcessing").hide();
+               }
+           });
+       })
+   
+       $('#btnSearch').click(function () {
+               var type = $('#ddlType').val();
+               var khuvuc = $('#ddlKhuVuc').val();
+               var startAt = $('#startAt').val();
+               var startEnd = $('#startEnd').val();
+               if (type == 0) {
+                 toastr.error("Bạn chưa kiểu danh sách");
+                 return false;
+               }
+               if (khuvuc == 0) {
+                   toastr.error("Bạn chưa chọn khu vực");
+                   return false;
+               }
+               if (startAt == "") {
+                   toastr.error("Bạn chưa chọn ngày bắt đầu");
+                   return false;
+               }
+               if (startEnd == "") {
+                   toastr.error("Bạn chưa chọn ngày kết thúc");
+                   return false;
+               }
+               toastr.success('Tìm kiếm thành công');
+   
+           });
+      function openadd() {
+           $('#modeladd').modal({ backdrop: 'static', keyboard: false })
+       };
+       
+   </script>
+  </body>
+</html>
+<script>
+  // $(document).ready(function () {
+  //       $('#datatable').dataTable({
+  //           "pageLength": 25
+  //       });
+  //   });
+</script>
